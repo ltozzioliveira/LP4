@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site huhjhjhIfood</title>
+    <title>Site iFood</title>
 </head>
-<body>
-    
+<body onload="window.alert('Seja bem vindo!')">
+    <p>Hello Worls</p>
+    <input type="text" id="valor">
+    <button id="enviar">Enviar</button>
+
+    <script>
+        document.querySelector("#enviar")
+        .addEventListener("click", mudarValor)
+
+        function mudarValor(){
+            document.querySelector("#valor").value = "Novo Conteúdo"
+        }
+    </script>
 </body>
 </html>
