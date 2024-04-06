@@ -7,7 +7,9 @@
 </head>
 <body>
     <form action="process.php" method="post">
-        
+        <label>Tamanho em m²</label>
+        <input type="number" name="m2">
+        <button type="submit">Enviar</button>
     </form>
 </body>
 </html>
