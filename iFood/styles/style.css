@@ -27,6 +27,8 @@ body {
     transform: translateY(-50%);
     top: 50%;
     left: 15vw;
+    width: 48%;
+    max-width: 500px;
 }
 
 #background {
@@ -148,4 +150,56 @@ body {
 .horizontal-grid div:hover {
     background-color: red;
     color: white;
+}
+
+@media screen and (max-width: 800px){
+    #body-content {
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    #logo {
+        position: absolute;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 15vw;
+        z-index: 1;
+    }
+
+    #background {
+        width: 100%;
+        height: 40vh;
+        position: absolute;
+        top: 0px;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
+        border-bottom-left-radius: 45%;
+        border-bottom-right-radius: 45%;
+    }
+
+    #login-form {
+        width: 100%;
+        right: 0%;
+        box-shadow: none;
+        border-bottom: 200px;
+        position: unset;
+        padding-bottom: 20%;
+    }
+
+    #people {
+        position: absolute;
+        transform: translateX(-50%);
+        top: 20%;
+        left: 50%;
+        height: 60%;
+        aspect-ratio: 1;
+        max-height: 500px;
+        width: auto;
+        max-width: none;
+    }
+
 }
