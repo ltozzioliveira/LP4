@@ -1,0 +1,52 @@
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto;
+}
+
+#menu-principal{
+    background-color: aqua;
+    grid-area: menu-principal;
+}
+
+#menu-lateral{
+    background-color: blueviolet;
+    grid-area: menu-lateral;
+}
+
+#banner {
+    background-color: burlywood;
+    grid-area: banner;
+}
+
+#principal{
+    background-color: darkgrey;
+    grid-area: principal;
+}
+
+#rodape{
+    background-color: darksalmon;
+    grid-area: rodape;
+}
+
+body{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: auto 3em auto 1em;
+    grid-template-areas: 
+            "menu-principal menu-principal"
+            "banner banner"
+            "menu-lateral principal"
+            "rodape rodape";
+}
+
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+
+
+
