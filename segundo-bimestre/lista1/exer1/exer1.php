@@ -7,7 +7,7 @@
     <title>Exercício 1</title>
 </head>
 <body>
-    <form action="exer1-resposta.php" method="POST">
+    <form action="/segundo-bimestre/lista1/exer1/process.php" method="POST">
         <label>informe o valor</label>
         <input type="number" name="valor">
         <button type="submit">Enviar</button>
