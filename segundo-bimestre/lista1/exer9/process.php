@@ -1,6 +1,6 @@
 <?php
     require_once "../cabecalho.php";
 
-    echo "<p>".exer3($_POST['value1'], $_POST['value2']) ."</p>";
+    echo "<p>".exer9($_POST['ano']) ."</p>";
 
     require_once "../rodape.php";
