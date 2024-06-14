@@ -15,169 +15,190 @@
         }
     }
 
-    function retornarClientes(){
+    function retornaConsultas(){
         try {
-            //Defino uma variável para declarar o SQL a ser executado
-            $sql = "SELECT * FROM cliente";
-            //Realizo a conexão com o banco de dados
+            $sql = "SELECT c.id as id, c.con_data as dia, c.con_hora as hora, a.nome as animal, cli.nome as dono FROM consultas c INNER JOIN animal a ON a.id = c.id_animal INNER JOIN cliente cli ON cli.id = a.id_cliente;";
             $conexao = conectarBanco();
-            //Executo a consulta, retornando o seu resultado
             return $conexao->query($sql);
         } catch (Exception $e) {
-            //Caso aconteça algum erro, retorno o valor 0
+            return 0;
+        }
+    }
+
+    function retornarClientes(){
+        try {
+            $sql = "SELECT * FROM cliente";
+            $conexao = conectarBanco();
+            return $conexao->query($sql);
+        } catch (Exception $e) {
             return 0;
         }
     }
 
     function consultarAnimalId($id){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "SELECT * FROM animal WHERE id = :id";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":id", $id);
-            //Executo a consulta
             $stmt->execute();
-            //Retorno o registro já em formato de ARRAY
             return $stmt->fetch();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
+            return 0;
+        }
+    }
+
+    function consultarConsultaId($id){
+        try{ 
+            $sql = "SELECT a.nome as animal, cli.nome as cliente, c.con_data as dia, c.con_hora as hora
+                    FROM consultas c INNER JOIN animal a ON a.id = c.id_animal INNER JOIN cliente cli ON a.id_cliente = cli.id
+                    WHERE c.id = :id";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (Exception $e){
             return 0;
         }
     }
 
     function consultarClienteId($id){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "SELECT * FROM cliente WHERE id = :id";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":id", $id);
-            //Executo a consulta
             $stmt->execute();
-            //Retorno o registro já em formato de ARRAY
             return $stmt->fetch();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
             return 0;
         }
     }
 
     function alterarAnimal($nome, $especie, $idade, $id_cliente, $id){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "UPDATE produto SET nome = :nome, descricao = :descricao, valor = :valor, categoria_id = :categoria WHERE id = :id";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":nome", $nome);
             $stmt->bindValue(":descricao", $descricao);
             $stmt->bindValue(":valor", $valor);
             $stmt->bindValue(":categoria", $categoria);
             $stmt->bindValue(":id", $id);
-            //Executo a consulta, retornando o seu resultado
             return $stmt->execute();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
             return 0;
         }
     }
 
     function alterarCliente($nome, $telefone, $endereco, $id){
-        try{ 
-            //Defino uma variável para declarar o SQL a ser executado
+        try{
             $sql = "UPDATE cliente SET nome = :nome, telefone = :telefone, endereco = :endereco WHERE id = :id";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":nome", $nome);
             $stmt->bindValue(":telefone", $telefone);
             $stmt->bindValue(":endereco", $endereco);
             $stmt->bindValue(":id", $id);
-            //Executo a consulta, retornando o seu resultado
             return $stmt->execute();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
             return 0;
         }
     }
 
+    function alterarConsulta($animal, $dia, $hora, $id){
+        try{
+            $sql = "UPDATE consultas SET id_animal = :animal, con_data = :dia, con_hora = :hora WHERE id = :id";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":animal", $animal);
+            $stmt->bindValue(":dia", $dia);
+            $stmt->bindValue(":hora", $hora);
+            $stmt->bindValue(":id", $id);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
+
+
     function inserirAnimal($nome, $id_cliente, $especie, $idade){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "INSERT INTO animal (nome, id_cliente, especie, idade)VALUES (:nome, :id_cliente, :especie, :idade)";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":nome", $nome);
             $stmt->bindValue(":id_cliente", $id_cliente);
             $stmt->bindValue(":especie", $especie);
             $stmt->bindValue(":idade", $idade);
-            //Executo a consulta, retornando o seu resultado
             return $stmt->execute();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
             return 0;
         }
     }
 
     function inserirCliente($nome, $telefone, $endereco){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "INSERT INTO cliente (nome, telefone, endereco)VALUES (:nome, :telefone, :endereco)";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":nome", $nome);
             $stmt->bindValue(":telefone", $telefone);
             $stmt->bindValue(":endereco", $endereco);
-            //Executo a consulta, retornando o seu resultado
             return $stmt->execute();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
+            return 0;
+        }
+    }
+
+    function inserirConsulta($animal, $dia, $hora){
+        try{ 
+            $sql = "INSERT INTO consultas (id_animal, con_data, con_hora)VALUES (:animal, :dia, :hora)";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":animal", $animal);
+            $stmt->bindValue(":dia", $dia);
+            $stmt->bindValue(":hora", $hora);
+            return $stmt->execute();
+        } catch (Exception $e){
             return 0;
         }
     }
 
     function excluirAnimal($id){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "DELETE FROM animal WHERE id = :id";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":id", $id);
-            //Executo a consulta, retornando o seu resultado
             return $stmt->execute();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
             return $e;
         }
     }
 
     function excluirCliente($id){
         try{ 
-            //Defino uma variável para declarar o SQL a ser executado
             $sql = "DELETE FROM cliente WHERE id = :id";
-            //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
-            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":id", $id);
-            //Executo a consulta, retornando o seu resultado
             return $stmt->execute();
         } catch (Exception $e){
-            //Caso aconteça algum erro, retorno o valor 0
             return 0;
+        }
+    }
+
+    function excluirConsulta($id){
+        try{ 
+            $sql = "DELETE FROM consultas WHERE id = :id";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return $e;
         }
     }
 ?>

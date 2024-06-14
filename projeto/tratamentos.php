@@ -1,22 +1,21 @@
 <?php
     require('header.php');
 ?>
-    <h3 class="text-white my-3">Gerenciamento de Consultas</h3>
-    <a href="inserir_consulta.php" class="btn btn-outline-light mt-3">Adicionar Consulta</a>
+    <h3 class="text-white my-3">Gerenciamento de Tratamentos</h3>
+    <a href="inserir_tratamentos.php" class="btn btn-outline-light mt-3">Adicionar Tratamento</a>
 
     <table class="mt-3 table table-hover table-striped text-white table-dark">
         <thead>
             <tr>
-                <th>Animal</th>
-                <th>Dono</th>
-                <th>Dia</th>
-                <th>Hora</th>
+                <th>Consulta</th>
+                <th>Nome</th>
+                <th>Custo</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <?php
-                $linhas = retornaConsultas();
+                $linhas = retornaTratamentos();
                 while($l = $linhas->fetch(PDO::FETCH_ASSOC)) {
             ?>
             <tr>
