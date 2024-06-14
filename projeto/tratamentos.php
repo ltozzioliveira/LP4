@@ -19,15 +19,14 @@
                 while($l = $linhas->fetch(PDO::FETCH_ASSOC)) {
             ?>
             <tr>
-                <td><?= $l['animal']?></td>
-                <td><?= $l['dono']?></td>
-                <td><?= $l['dia']?></td>
-                <td><?= $l['hora']?></td>
+                <td><?= $l['id_consulta']?></td>
+                <td><?= $l['nome']?></td>
+                <td><?= $l['custo']?></td>
                 <td class="d-flex justify-content-end">
-                    <a href="alterar_consulta.php?id=<?=$l['id']?>" class="btn btn-outline-warning m-2">
+                    <a href="alterar_tratamento.php?id=<?=$l['id']?>" class="btn btn-outline-warning m-2">
                         Alterar
                     </a>
-                    <a href="excluir_consulta.php?id=<?=$l['id']?>" class="btn btn-outline-danger m-2">
+                    <a href="excluir_tratamento.php?id=<?=$l['id']?>" class="btn btn-outline-danger m-2">
                         Excluir
                     </a>
                 </td>

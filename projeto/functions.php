@@ -35,6 +35,16 @@
         }
     }
 
+    function retornaTratamentos(){
+        try {
+            $sql = "SELECT * FROM tratamento";
+            $conexao = conectarBanco();
+            return $conexao->query($sql);
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
     function consultarAnimalId($id){
         try{ 
             $sql = "SELECT * FROM animal WHERE id = :id";
