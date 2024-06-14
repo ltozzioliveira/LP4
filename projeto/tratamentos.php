@@ -2,7 +2,7 @@
     require('header.php');
 ?>
     <h3 class="text-white my-3">Gerenciamento de Tratamentos</h3>
-    <a href="inserir_tratamentos.php" class="btn btn-outline-light mt-3">Adicionar Tratamento</a>
+    <a href="inserir_tratamento.php" class="btn btn-outline-light mt-3">Adicionar Tratamento</a>
 
     <table class="mt-3 table table-hover table-striped text-white table-dark">
         <thead>

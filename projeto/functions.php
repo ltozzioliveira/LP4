@@ -7,7 +7,7 @@
 
     function retornarAnimais(){
         try {
-            $sql = "SELECT a.id, a.nome as Nome, a.especie as Espécie, a.idade as Idade, c.nome as Dono FROM animal a INNER JOIN cliente c ON c.id = a.id_cliente";
+            $sql = "SELECT a.id as id, a.nome as Nome, a.especie as Espécie, a.idade as Idade, c.nome as Dono FROM animal a INNER JOIN cliente c ON c.id = a.id_cliente";
             $conexao = conectarBanco();
             return $conexao->query($sql);
         } catch(Exception $e) {
@@ -17,7 +17,17 @@
 
     function retornaConsultas(){
         try {
-            $sql = "SELECT c.id as id, c.con_data as dia, c.con_hora as hora, a.nome as animal, cli.nome as dono FROM consultas c INNER JOIN animal a ON a.id = c.id_animal INNER JOIN cliente cli ON cli.id = a.id_cliente;";
+            $sql = "SELECT c.id, c.con_data as dia, c.con_hora as hora, a.nome as animal, cli.nome as dono FROM consultas c INNER JOIN animal a ON a.id = c.id_animal INNER JOIN cliente cli ON cli.id = a.id_cliente;";
+            $conexao = conectarBanco();
+            return $conexao->query($sql);
+        } catch (Exception $e) {
+            return 0;
+        }
+    }
+
+    function retornarIdsConsulta(){
+        try {
+            $sql = "SELECT * FROM consultas";
             $conexao = conectarBanco();
             return $conexao->query($sql);
         } catch (Exception $e) {
@@ -48,6 +58,19 @@
     function consultarAnimalId($id){
         try{ 
             $sql = "SELECT * FROM animal WHERE id = :id";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
+
+    function consultarTratamentoId($id){
+        try{ 
+            $sql = "SELECT * FROM tratamento WHERE id = :id";
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":id", $id);
@@ -95,6 +118,21 @@
             $stmt->bindValue(":descricao", $descricao);
             $stmt->bindValue(":valor", $valor);
             $stmt->bindValue(":categoria", $categoria);
+            $stmt->bindValue(":id", $id);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
+
+    function alterarTratamento($id_consulta, $nome, $custo, $id){
+        try{ 
+            $sql = "UPDATE tratamento SET id_consulta = :id_consulta, nome = :nome, custo = :custo WHERE id = :id";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id_consulta", $id_consulta);
+            $stmt->bindValue(":nome", $nome);
+            $stmt->bindValue(":custo", $custo);
             $stmt->bindValue(":id", $id);
             return $stmt->execute();
         } catch (Exception $e){
@@ -176,6 +214,20 @@
         }
     }
 
+    function inserirTratamento($consulta, $nome, $custo){
+        try{ 
+            $sql = "INSERT INTO tratamento (id_consulta, nome, custo)VALUES (:consulta, :nome, :custo)";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":consulta", $consulta);
+            $stmt->bindValue(":nome", $nome);
+            $stmt->bindValue(":custo", $custo);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return 0;
+        }
+    }
+
     function excluirAnimal($id){
         try{ 
             $sql = "DELETE FROM animal WHERE id = :id";
@@ -203,6 +255,18 @@
     function excluirConsulta($id){
         try{ 
             $sql = "DELETE FROM consultas WHERE id = :id";
+            $conexao = conectarBanco();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            return $stmt->execute();
+        } catch (Exception $e){
+            return $e;
+        }
+    }
+
+    function excluirTratamento($id){
+        try{ 
+            $sql = "DELETE FROM tratamento WHERE id = :id";
             $conexao = conectarBanco();
             $stmt = $conexao->prepare($sql);
             $stmt->bindValue(":id", $id);
