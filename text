@@ -1,0 +1,4 @@
+Numa clínica veterinária, animais são registrados com nome, espécie e idade, enquanto donos têm
+suas informações armazenadas com nome, telefone e endereço. Consultas realizadas são
+documentadas com data, horário e o respectivo animal. Tratamentos realizados durante as consultas
+são registrados com nome do tratamento, custo e a respectiva consulta. 
