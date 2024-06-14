@@ -15,10 +15,43 @@
         }
     }
 
+    function retornarClientes(){
+        try {
+            //Defino uma variável para declarar o SQL a ser executado
+            $sql = "SELECT * FROM cliente";
+            //Realizo a conexão com o banco de dados
+            $conexao = conectarBanco();
+            //Executo a consulta, retornando o seu resultado
+            return $conexao->query($sql);
+        } catch (Exception $e) {
+            //Caso aconteça algum erro, retorno o valor 0
+            return 0;
+        }
+    }
+
     function consultarAnimalId($id){
         try{ 
             //Defino uma variável para declarar o SQL a ser executado
             $sql = "SELECT * FROM animal WHERE id = :id";
+            //Realizo a conexão com o banco de dados
+            $conexao = conectarBanco();
+            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            //Executo a consulta
+            $stmt->execute();
+            //Retorno o registro já em formato de ARRAY
+            return $stmt->fetch();
+        } catch (Exception $e){
+            //Caso aconteça algum erro, retorno o valor 0
+            return 0;
+        }
+    }
+
+    function consultarClienteId($id){
+        try{ 
+            //Defino uma variável para declarar o SQL a ser executado
+            $sql = "SELECT * FROM cliente WHERE id = :id";
             //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
             //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
@@ -55,15 +88,21 @@
         }
     }
 
-    function retornarClientes(){
-        try {
+    function alterarCliente($nome, $telefone, $endereco, $id){
+        try{ 
             //Defino uma variável para declarar o SQL a ser executado
-            $sql = "SELECT * FROM cliente";
+            $sql = "UPDATE cliente SET nome = :nome, telefone = :telefone, endereco = :endereco WHERE id = :id";
             //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
+            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":nome", $nome);
+            $stmt->bindValue(":telefone", $telefone);
+            $stmt->bindValue(":endereco", $endereco);
+            $stmt->bindValue(":id", $id);
             //Executo a consulta, retornando o seu resultado
-            return $conexao->query($sql);
-        } catch (Exception $e) {
+            return $stmt->execute();
+        } catch (Exception $e){
             //Caso aconteça algum erro, retorno o valor 0
             return 0;
         }
@@ -89,10 +128,46 @@
         }
     }
 
+    function inserirCliente($nome, $telefone, $endereco){
+        try{ 
+            //Defino uma variável para declarar o SQL a ser executado
+            $sql = "INSERT INTO cliente (nome, telefone, endereco)VALUES (:nome, :telefone, :endereco)";
+            //Realizo a conexão com o banco de dados
+            $conexao = conectarBanco();
+            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":nome", $nome);
+            $stmt->bindValue(":telefone", $telefone);
+            $stmt->bindValue(":endereco", $endereco);
+            //Executo a consulta, retornando o seu resultado
+            return $stmt->execute();
+        } catch (Exception $e){
+            //Caso aconteça algum erro, retorno o valor 0
+            return 0;
+        }
+    }
+
     function excluirAnimal($id){
         try{ 
             //Defino uma variável para declarar o SQL a ser executado
             $sql = "DELETE FROM animal WHERE id = :id";
+            //Realizo a conexão com o banco de dados
+            $conexao = conectarBanco();
+            //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            //Executo a consulta, retornando o seu resultado
+            return $stmt->execute();
+        } catch (Exception $e){
+            //Caso aconteça algum erro, retorno o valor 0
+            return $e;
+        }
+    }
+
+    function excluirCliente($id){
+        try{ 
+            //Defino uma variável para declarar o SQL a ser executado
+            $sql = "DELETE FROM cliente WHERE id = :id";
             //Realizo a conexão com o banco de dados
             $conexao = conectarBanco();
             //Inicio a preparação do SQL para poder substituir os APELIDOS pelos valores passados por parâmetro
